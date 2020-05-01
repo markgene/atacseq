@@ -136,6 +136,8 @@ If `-profile` is not specified at all the pipeline will be run locally and expec
 * `test`
   * A profile with a complete configuration for automated testing
   * Includes links to test data so needs no other parameters
+* `sjlsf`
+  * A profile to run the pipeline on SJ HPC.  
 
 ### `--input`
 
