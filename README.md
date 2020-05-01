@@ -1,3 +1,7 @@
+# Notice
+
+This is a repo forked from [nf-core/atacseq](https://github.com/nf-core/atacseq). 
+
 # ![nfcore/atacseq](docs/images/nf-core-atacseq_logo.png)
 
 [![Build Status](https://travis-ci.com/nf-core/atacseq.svg?branch=master)](https://travis-ci.com/nf-core/atacseq)
