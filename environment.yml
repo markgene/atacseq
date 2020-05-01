@@ -6,6 +6,11 @@ channels:
   - bioconda
   - defaults
 dependencies:
+  ## Do not install nextflow using conda. At least two issues.
+  ## 1. Found conflicts! Looking for incompatible packages.
+  ## 2. Java version issue.
+  ## Instead install in the way shown in Notes.md.
+  #- nextflow=20.01.0
   ## conda-forge packages
   - gawk=4.2.1
   - r-base=3.4.1
