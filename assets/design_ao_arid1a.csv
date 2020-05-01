@@ -1,0 +1,5 @@
+group,replicate,fastq_1,fastq_2
+WT,1,/rgs01/scratch/users/jchen4/projects/ao_arid1a/1940146_ATAC20851_S1_L001_R1_001.fastq.gz,/rgs01/scratch/users/jchen4/projects/ao_arid1a/1940146_ATAC20851_S1_L001_R2_001.fastq.gz
+WT,2,/rgs01/scratch/users/jchen4/projects/ao_arid1a/1940147_ATAC20852_S2_L001_R1_001.fastq.gz,/rgs01/scratch/users/jchen4/projects/ao_arid1a/1940147_ATAC20852_S2_L001_R2_001.fastq.gz
+KO,1,/rgs01/scratch/users/jchen4/projects/ao_arid1a/1940148_ATAC20871_S3_L001_R1_001.fastq.gz,/rgs01/scratch/users/jchen4/projects/ao_arid1a/1940148_ATAC20871_S3_L001_R2_001.fastq.gz
+KO,2,/rgs01/scratch/users/jchen4/projects/ao_arid1a/1940149_ATAC20872_S4_L001_R1_001.fastq.gz,/rgs01/scratch/users/jchen4/projects/ao_arid1a/1940149_ATAC20872_S4_L001_R2_001.fastq.gz
