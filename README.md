@@ -1,19 +1,6 @@
-# Notice
-
-This is a repo forked from [nf-core/atacseq](https://github.com/nf-core/atacseq). 
-
-# ![nfcore/atacseq](docs/images/nf-core-atacseq_logo.png)
-
-[![Build Status](https://travis-ci.com/nf-core/atacseq.svg?branch=master)](https://travis-ci.com/nf-core/atacseq)
-[![Nextflow](https://img.shields.io/badge/nextflow-%E2%89%A519.10.0-brightgreen.svg)](https://www.nextflow.io/)
-
-[![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg)](http://bioconda.github.io/)
-[![Docker](https://img.shields.io/docker/automated/nfcore/atacseq.svg)](https://hub.docker.com/r/nfcore/atacseq)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.2634132.svg)](https://doi.org/10.5281/zenodo.2634132)
-
 ## Introduction
 
-**nfcore/atacseq** is a bioinformatics analysis pipeline used for ATAC-seq data.
+The repo markgene/atacseq is an ATAC-seq pipeline configured to be run on internal high performance cluster (HPC) with job scheduler platform Load Sharing Facility (LSF). It is originally forked from [nf-core/atacseq](https://github.com/nf-core/atacseq), a bioinformatics analysis pipeline used for ATAC-seq data. I am working on additional features to the pipeline.
 
 The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It comes with docker containers making installation trivial and results highly reproducible.
 
@@ -64,12 +51,40 @@ The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool
 
 i. Install [`nextflow`](https://nf-co.re/usage/installation)
 
-ii. Install one of [`docker`](https://docs.docker.com/engine/installation/), [`singularity`](https://www.sylabs.io/guides/3.0/user-guide/) or [`conda`](https://conda.io/miniconda.html)
+```sh
+# Make sure that Java v8+ is installed:
+java -version
+
+# Install Nextflow
+curl -fsSL get.nextflow.io | bash
+
+# Add Nextflow binary to your user's PATH:
+mv nextflow ~/bin/
+
+# Test with hello-world example
+nextflow run hello
+```
+
+ii. Install conda environment.
+
+```sh
+git clone https://github.com/markgene/atacseq.git
+cd atacseq
+# The command will create a Conda env named atacseq. Be sure you do not have 
+# the evironment of the same name.
+conda env create -f environment.yml
+
+# Wait for the installlation and then activate it.
+conda activate atacseq
+```
 
 iii. Download the pipeline and test it on a minimal dataset with a single command
 
 ```bash
-nextflow run nf-core/atacseq -profile test,<docker/singularity/conda/institute>
+## Notice the test is run in local executor.
+bsub -P MC -J testLocal -q priority -n 2 -R "rusage[mem=8000]" "nextflow run main.nf -profile test -with-report report.html -with-trace -with-timeline timeline.html -with-dag flowchart.png"
+# Test with test_sjlsf
+bsub -P MC -J testLSF -q priority -n 1 -R "rusage[mem=8000]" "nextflow run main.nf -profile test_sjlsf -with-report report.html -with-trace -with-timeline timeline.html -with-dag flowchart.png"
 ```
 
 > Please check [nf-core/configs](https://github.com/nf-core/configs#documentation) to see if a custom config file to run nf-core pipelines already exists for your Institute. If so, you can simply use `-profile institute` in your command. This will enable either `docker` or `singularity` and set the appropriate execution settings for your local compute environment.
@@ -77,45 +92,27 @@ nextflow run nf-core/atacseq -profile test,<docker/singularity/conda/institute>
 iv. Start running your own analysis!
 
 ```bash
-nextflow run nf-core/atacseq -profile <docker/singularity/conda/institute> --input design.csv --genome GRCh37
+# DO NOT RUN. This will take a while. 
+# It runs four mouse samples with the config specified in `conf/sjlsf.config`.
+bsub -P MC -J exampleRun -q priority -n 1 "nextflow run main.nf -profile conf/sjlsf.config -with-report report.html -with-trace -with-timeline timeline.html -with-dag flowchart.png --outdir sjlsf_results -resume"
 ```
 
 See [usage docs](docs/usage.md) for all of the available options when running the pipeline.
 
 ## Documentation
 
-The nf-core/atacseq pipeline comes with documentation about the pipeline, found in the `docs/` directory:
+The markgene/atacseq document is found in the `docs/` directory:
+
+1. [Running the pipeline](docs/usage.md)
+1. [Output and how to interpret the results](docs/output.md)
+
+The original nf-core/atacseq pipeline comes with documentation:
 
 1. [Installation](https://nf-co.re/usage/installation)
-2. Pipeline configuration
+1. Pipeline configuration
     * [Local installation](https://nf-co.re/usage/local_installation)
     * [Adding your own system config](https://nf-co.re/usage/adding_own_config)
     * [Reference genomes](https://nf-co.re/usage/reference_genomes)
-3. [Running the pipeline](docs/usage.md)
-4. [Output and how to interpret the results](docs/output.md)
-5. [Troubleshooting](https://nf-co.re/usage/troubleshooting)
+1. [Troubleshooting](https://nf-co.re/usage/troubleshooting)
 
-## Credits
 
-The pipeline was originally written by [The Bioinformatics & Biostatistics Group](https://www.crick.ac.uk/research/science-technology-platforms/bioinformatics-and-biostatistics/) for use at [The Francis Crick Institute](https://www.crick.ac.uk/), London.
-
-The pipeline was developed by [Harshil Patel](mailto:harshil.patel@crick.ac.uk).
-
-The [nf-core/rnaseq](https://github.com/nf-core/rnaseq) and [nf-core/chipseq](https://github.com/nf-core/chipseq) pipelines developed by Phil Ewels were initially used as a template for this pipeline. Many thanks to Phil for all of his help and advice, and the team at SciLifeLab.
-
-Many thanks to others who have helped out along the way too, including (but not limited to): [@apeltzer](https://github.com/apeltzer), [@sven1103](https://github.com/sven1103), [@MaxUlysse](https://github.com/MaxUlysse), [@micans](https://github.com/micans), [@jinmingda](https://github.com/jinmingda), [@ktrns](https://github.com/ktrns), [@crickbabs](https://github.com/crickbabs), [@pditommaso](https://github.com/pditommaso).
-
-## Contributions and Support
-
-If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
-
-For further information or help, don't hesitate to get in touch on [Slack](https://nfcore.slack.com/channels/atacseq) (you can join with [this invite](https://nf-co.re/join/slack)).
-
-## Citation
-
-If you use nf-core/atacseq for your analysis, please cite it using the following doi: [10.5281/zenodo.2634132](https://doi.org/10.5281/zenodo.2634132)
-
-You can cite the `nf-core` pre-print as follows:  
-> Ewels PA, Peltzer A, Fillinger S, Alneberg JA, Patel H, Wilm A, Garcia MU, Di Tommaso P, Nahnsen S. **nf-core: Community curated bioinformatics pipelines**. *bioRxiv*. 2019. p. 610741. [doi: 10.1101/610741](https://www.biorxiv.org/content/10.1101/610741v1).
-
-An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
