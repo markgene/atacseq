@@ -114,6 +114,7 @@ The original nf-core/atacseq pipeline comes with documentation:
 
 ## To-dos
 
+1. Add Irreproducible Discovery Rate.
 1. Downstream analysis. I am going to add the following analyses to the pipeline, i) motif enrichment analysis, ii) transcription factor footprinting, and iii) nucleosome positioning. Perhaps other analyses in the future.
 1. Generate report. The pipeline organizes the output in a hierarchical structure. It reflects how the workflow goes and sometime the result is stored in a deep manner. I will collect the results I am most concerned to one place, perhaps by creating symbolic links of the different sub-folders or files.
 
