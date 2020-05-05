@@ -54,13 +54,10 @@ i. Install [`nextflow`](https://nf-co.re/usage/installation)
 ```sh
 # Make sure that Java v8+ is installed:
 java -version
-
 # Install Nextflow
 curl -fsSL get.nextflow.io | bash
-
 # Add Nextflow binary to your user's PATH:
 mv nextflow ~/bin/
-
 # Test with hello-world example
 nextflow run hello
 ```
@@ -115,4 +112,8 @@ The original nf-core/atacseq pipeline comes with documentation:
     * [Reference genomes](https://nf-co.re/usage/reference_genomes)
 1. [Troubleshooting](https://nf-co.re/usage/troubleshooting)
 
+## To-dos
+
+1. Downstream analysis. I am going to add the following analyses to the pipeline, i) motif enrichment analysis, ii) transcription factor footprinting, and iii) nucleosome positioning. Perhaps other analyses in the future.
+1. Generate report. The pipeline organizes the output in a hierarchical structure. It reflects how the workflow goes and sometime the result is stored in a deep manner. I will collect the results I am most concerned to one place, perhaps by creating symbolic links of the different sub-folders or files.
 
